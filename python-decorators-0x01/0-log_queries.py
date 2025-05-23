@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sqlite3
 import functools
+from datetime import datetime  # ✅ Required for timestamp
 
 
 def log_queries(func):
@@ -8,7 +9,8 @@ def log_queries(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         query = args[0] if args else kwargs.get('query', '')
-        print(f"[LOG] Executing SQL Query: {query}")
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"[{timestamp}] Executing SQL Query: {query}")
         return func(*args, **kwargs)
     return wrapper
 
