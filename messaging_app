@@ -1,1 +1,22 @@
 messaging_app/kurbeScript
+#!/bin/bash
+
+echo " Setting up my Kubernetes playground..."
+
+# Install Minikube if missing
+if ! command -v minikube &> /dev/null; then
+    echo "Downloading Minikube..."
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+fi
+
+# Start cluster
+echo "Starting cluster..."
+minikube start
+
+# Verify
+kubectl cluster-info
+kubectl get pods --all-namespaces
+
+echo "Done! Cluster is ready."
+echo "Try 'kubectl get nodes' to check my cluster."
